@@ -31,7 +31,8 @@ jobs:
 
       - name: Build deb
         run: |
-          export THEOS=${{ github.workspace }}/theos
+          export THEOS="${{ github.workspace }}/theos"
+          export THEOS_MAKE_PATH="${THEOS}/makefiles"
           make package
 
       - name: Upload artifact
