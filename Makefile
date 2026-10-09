@@ -6,7 +6,6 @@ THEOS_PACKAGE_SCHEME = rootless
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = KuwoAutoPlay
-
 KuwoAutoPlay_FILES = Tweak.x
 KuwoAutoPlay_CFLAGS = -fobjc-arc
 
