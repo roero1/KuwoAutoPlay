@@ -30,7 +30,9 @@ jobs:
           bash -c "$(curl -fsSL https://mirror.ghproxy.com/https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
 
       - name: Build deb
-        run: make package
+        run: |
+          export THEOS=${{ github.workspace }}/theos
+          make package
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
