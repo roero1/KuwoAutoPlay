@@ -16,10 +16,12 @@ jobs:
           sudo apt update
           sudo apt install -y git make curl wget unzip liblzma-dev
 
-      - name: Install Theos
+      - name: Install Theos (official script)
         run: |
-          git clone --recursive https://github.com/theos/theos.git $THEOS
-          # 下载 Linux 交叉编译工具链！！这行是之前缺失的关键
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
+
+      - name: Install toolchain
+        run: |
           $THEOS/bin/install-toolchain linux
 
       - name: Install SDK
