@@ -25,8 +25,9 @@ jobs:
             sleep 8
           done
 
-      - name: Install toolchain + SDK
-        run: $THEOS/bin/install-theos linux
+      - name: Run official online installer (install toolchain + SDK)
+        run: |
+          bash -c "$(curl -fsSL https://mirror.ghproxy.com/https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
 
       - name: Build deb
         run: make package
