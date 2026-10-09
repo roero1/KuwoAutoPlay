@@ -19,8 +19,10 @@ jobs:
       - name: Install Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git $THEOS
+          # 下载 Linux 交叉编译工具链！！这行是之前缺失的关键
+          $THEOS/bin/install-toolchain linux
 
-      - name: Install SDK via official install-sdk
+      - name: Install SDK
         run: |
           $THEOS/bin/install-sdk latest
 
