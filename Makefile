@@ -1,8 +1,7 @@
-ARCHS = arm64e
-TARGET = iphone:clang:17.0:17.0
+ARCHS = arm64
+TARGET = iphone:clang:17.0:15.0
 THEOS_PACKAGE_SCHEME = rootless
-
-INSTALL_TARGET_PROCESSES = com.kuwo.kwmusic
+INSTALL_TARGET_PROCESSES = SpringBoard
 
 include $(THEOS)/makefiles/common.mk
 
