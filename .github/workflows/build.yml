@@ -14,15 +14,17 @@ jobs:
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
           echo "PATH=$HOME/theos/bin:$PATH" >> $GITHUB_ENV
+          sudo apt update
+          sudo apt install -y libbz2-dev liblzma-dev
 
-      - name: Download iOS 17.0 SDK
+      - name: Download iPhoneOS17.0 SDK
         run: |
           mkdir -p $HOME/theos/sdks
           cd $HOME/theos/sdks
-          curl -L -o iPhoneOS17.0.sdk.tar.xz https://github.com/xybp888/iOS-SDKs/raw/master/iPhoneOS17.0.sdk.tar.xz
-          tar -xf iPhoneOS17.0.sdk.tar.xz
+          wget -q "https://github.com/SDKs-iOS/iPhoneOS17.0.sdk/raw/main/iPhoneOS17.0.sdk.tar.xz"
+          tar -Jxf iPhoneOS17.0.sdk.tar.xz
 
-      - name: Build
+      - name: Build package
         run: make package
 
       - uses: actions/upload-artifact@v4
