@@ -16,20 +16,17 @@ jobs:
           sudo apt update
           sudo apt install -y git make curl wget unzip liblzma-dev
 
-      - name: Download Theos (with retry)
+      - name: Download Theos (mirror + retry)
         run: |
           for i in {1..3}; do
-            git clone --recursive https://github.com/theos/theos.git "$THEOS" && break
+            git clone --recursive https://mirror.ghproxy.com/https://github.com/theos/theos.git "$THEOS" && break
             echo "Clone failed, retry $i/3"
             rm -rf "$THEOS"
-            sleep 5
+            sleep 8
           done
 
-      - name: Install Linux toolchain
-        run: $THEOS/bin/install-toolchain linux
-
-      - name: Install SDK
-        run: $THEOS/bin/install-sdk latest
+      - name: Install toolchain + SDK
+        run: $THEOS/bin/install-theos linux
 
       - name: Build deb
         run: make package
