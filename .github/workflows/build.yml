@@ -6,31 +6,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      THEOS: ${{ github.workspace }}/theos
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git make curl wget unzip liblzma-dev
+      - name: Setup Theos
+        uses: theos/setup-theos@v1
+        with:
+          platform: linux
+          sdk: latest
 
-      - name: Install Theos (official script)
-        run: |
-          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
-
-      - name: Install toolchain
-        run: |
-          $THEOS/bin/install-toolchain linux
-
-      - name: Install SDK
-        run: |
-          $THEOS/bin/install-sdk latest
-
-      - name: Build deb package
+      - name: Build
         run: make package
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload deb
+        uses: actions/upload-artifact@v4
         with:
           path: packages/*.deb
