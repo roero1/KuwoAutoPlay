@@ -6,19 +6,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      THEOS: ${{ github.workspace }}/theos
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Theos
-        uses: theos/setup-theos@v1
-        with:
-          platform: linux
-          sdk: latest
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git make curl wget unzip liblzma-dev
 
-      - name: Build
+      - name: Download Theos (with retry)
+        run: |
+          for i in {1..3}; do
+            git clone --recursive https://github.com/theos/theos.git "$THEOS" && break
+            echo "Clone failed, retry $i/3"
+            rm -rf "$THEOS"
+            sleep 5
+          done
+
+      - name: Install Linux toolchain
+        run: $THEOS/bin/install-toolchain linux
+
+      - name: Install SDK
+        run: $THEOS/bin/install-sdk latest
+
+      - name: Build deb
         run: make package
 
-      - name: Upload deb
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           path: packages/*.deb
