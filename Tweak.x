@@ -14,7 +14,7 @@ static BOOL hasTriggered = NO;
         objc_getClass("KuwoAppDelegate"),
         @selector(application:didFinishLaunchingWithOptions:),
         ^(Class self, SEL _cmd, id selfObj, SEL sel, UIApplication* app, NSDictionary* opt) {
-            %orig;
+        
             if(hasTriggered) return;
             hasTriggered = YES;
 
