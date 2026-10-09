@@ -10,17 +10,12 @@ static BOOL hasTriggered = NO;
 @end
 
 %ctor {
+    static void (*origImp)(id self, SEL _cmd, UIApplication* app, NSDictionary* opt);
     MSHookMessageEx(
         objc_getClass("KuwoAppDelegate"),
         @selector(application:didFinishLaunchingWithOptions:),
         ^(id self, SEL _cmd, UIApplication* app, NSDictionary* opt) {
-            
-            // ========== MSHookMessageEx 写法：手动调用原始实现 ==========
-            // 定义一个函数指针保存原方法
-            static void (*origImp)(id self, SEL _cmd, UIApplication* app, NSDictionary* opt);
-            if (origImp) {
-                origImp(self, _cmd, app, opt); // ✅ 这才是 MSHook 里面调用原方法，不是 %orig
-            }
+            origImp(self, _cmd, app, opt);
 
             if(hasTriggered) return;
             hasTriggered = YES;
@@ -40,6 +35,6 @@ static BOOL hasTriggered = NO;
                 }
             });
         },
-        (IMP *)&origImp // ⭐ 重点！把原始实现存进 origImp
+        (IMP *)&origImp
     );
 }
