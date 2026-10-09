@@ -3,7 +3,8 @@ TARGET = iphone:clang:latest:15.0
 INSTALL_TARGET_PROCESSES = Kuwo
 THEOS_PACKAGE_SCHEME = rootless
 
-include $(THEOS)/makefiles/common.mk
+THEOS_MAKE_PATH = $(THEOS)/makefiles
+include $(THEOS_MAKE_PATH)/common.mk
 
 TWEAK_NAME = KuwoAutoPlay
 KuwoAutoPlay_FILES = Tweak.x
