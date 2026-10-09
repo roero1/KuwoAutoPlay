@@ -1,0 +1,7 @@
+Package: com.example.kuwoautoplay
+Name: KuwoAutoPlay
+Version: 0.0.1
+Architecture: iphoneos-arm64e
+Maintainer: Example
+Description: Auto play song for KuwoMusic (Research Only)
+Depends: mobilesubstrate
